@@ -2,7 +2,7 @@
 
 # OC USB MEDIA
 
-<img src="Helper/icon_256x256.png" alt="Github Project" style="width:75%;">
+<img src="Helper/icon_256x256.png" alt="Github Project" style="width:25%;">
 
 ### It is an Objective-C project utility for creating a macOS installation USB drive. 
   You can create a bootable USB drive
