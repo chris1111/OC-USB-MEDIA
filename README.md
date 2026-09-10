@@ -8,7 +8,13 @@
   You also have the option to install OpenCore after the post-installation process.
 
 ### Download the Release ➥ [OC USB MEDIA](https://github.com/chris1111/OC-USB-MEDIA/releases/tag/ocusbmedia-latest)
+-------------------------------------------
 
+- [x] `Clone and build OC USB MEDIA:` You need Xcode
+```bash
+git clone https://github.com/chris1111/OC-USB-MEDIA.git && cd $HOME/OC-USB-MEDIA && make
+```
+-------------------------------------------
 <img src="Helper/Screenshot-1.png" alt="Github Project" style="width:50%;"><img src="Helper/Screenshot-2.png" alt="Github Project" style="width:50%;">
 
 
