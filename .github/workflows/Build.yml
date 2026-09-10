@@ -1,0 +1,64 @@
+name: OCUSBMEDIA
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos:
+    name: OCUSBMEDIA
+    runs-on: macos-latest  # Resolves automatically to macos-15
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Manage Version
+        run: |
+          echo "GIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=ocusbmedia-latest" >> $GITHUB_ENV
+          echo "RELEASE_NAME=OCUSBMEDIA latest" >> $GITHUB_ENV
+
+
+      - name: Build Chameleon
+        run: |
+          chmod +x ./Makefile
+          
+      - name: Prepare Release
+        run: |
+          make
+          mkdir -p ./sym/OC-USB-MEDIA
+          cp -Rf ./build/Release/. ./sym/OC-USB-MEDIA/ || exit 1
+
+      - name: 'Tar files'
+        run: tar -czvf ./sym/OC-USB-MEDIA.tar.gz ./sym/OC-USB-MEDIA
+
+      - name: Upload to Artifacts
+        if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@v6
+        with:
+          name: OCUSBMEDIA-${{ env.GIT_SHA }}
+          path: |
+            sym/OC-USB-MEDIA.tar.gz
+
+      - name: Upload to Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${RELEASE_TAG}" >/dev/null 2>&1; then
+            gh release edit "${RELEASE_TAG}" \
+              --target "${GITHUB_SHA}" \
+              --title "${RELEASE_NAME}" \
+              --notes "Latest OCUSBMEDIA build from ${GIT_SHA}" \
+              --prerelease
+            gh release upload "${RELEASE_TAG}" ./sym/OC-USB-MEDIA.tar.gz --clobber
+          else
+            gh release create "${RELEASE_TAG}" ./sym/OC-USB-MEDIA.tar.gz \
+              --target "${GITHUB_SHA}" \
+              --title "${RELEASE_NAME}" \
+              --notes "Latest OCUSBMEDIA build from ${GIT_SHA}" \
+              --prerelease
+          fi
