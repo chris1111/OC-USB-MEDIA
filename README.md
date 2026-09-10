@@ -9,8 +9,6 @@
 
 ### Download the Release ➥ [OC USB MEDIA](https://github.com/chris1111/OC-USB-MEDIA/releases/tag/ocusbmedia-latest)
 
-<img src="Helper/Screenshot-1.png" alt="Github Project" style="width:50%;">
-
-<img src="Helper/Screenshot-2.png" alt="Github Project" style="width:50%;">
+<img src="Helper/Screenshot-1.png" alt="Github Project" style="width:50%;"><img src="Helper/Screenshot-2.png" alt="Github Project" style="width:50%;">
 
 
